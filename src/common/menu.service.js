@@ -28,20 +28,6 @@ function MenuService($http, ApiPath) {
     });
   };
 
-  service.getMenuItem = function(shortName) {
-    return $http.get(ApiPath + '/menu_items/' + shortName + '.json');
-  }
-
-  service.setUser = function(userObj) {
-    service.user = angular.copy(userObj);
-    console.log(service.user);
-  }
-
-  service.getUser = function() {
-    console.log(service.user);
-    return service.user;
-  }
-
 }
 
 

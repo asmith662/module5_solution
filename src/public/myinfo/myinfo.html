@@ -1,19 +1,23 @@
 <div class="container">
     <div class="row">
-        <div ng-show="myinfo.signedUp">
-            <h1>Showing information for user.</h1>
-            <p>First name: {{myinfo.user.firstName}}</p>
-            <p>Last name: {{myinfo.user.lastName}}</p>
-            <p>Email: {{myinfo.user.email}}</p>
-            <p>Phone: {{myinfo.user.phone}}</p>
-            <p>Favorite dish: {{myinfo.user.favoriteDishDetails.name}}</p>
-            <p>{{myinfo.user.favoriteDishDetails.description}}</p>
-            <img class="img-responsive" ng-src="{{myinfo.apiPath}}/images/{{myinfo.user.favoriteDish}}.jpg" alt="{{myinfo.user.favoriteDishDetails.name}}" />
 
+        <div class="text-center"
+             ng-if="account.users.length">
+             <h2 class="text-center">Account Information:</h2>
+             <dl ng-repeat="prop in account.users[0]">
+               <dd class="text-center">{{prop}}</dd>
+             </dl>
         </div>
 
-        <div ng-hide="myinfo.signedUp">
-            <h1>You need to signup first. <a class="btn btn-default" ui-sref="public.signup">Signup now!</a></h1>
+        <div id="no-account-warn"
+             class="text-center"
+             ng-if="!account.users.length">
+             <span>Not Signed Up Yet.</span>
+             <a class="btn btn-default"
+                ui-sref="public.signup">
+                Signup now!
+             </a>
         </div>
+
     </div>
 </div>

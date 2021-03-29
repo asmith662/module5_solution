@@ -1,37 +1,28 @@
 (function () {
+
   'use strict';
 
-angular.module('public')
-.controller('SignUpController', SignUpController);
+  angular.module('public')
+    .controller('SignUpController', SignUpController);
 
-  SignUpController.$inject = ['MenuService'];
-  function SignUpController(MenuService) {
-    var signUp = this;
+  SignUpController.$inject = ['menuItems', 'SignupService']
+  function SignUpController(menuItems, SignupService) {
+    const signup = this;
 
-    signUp.user = {};
-    signUp.shortName = {};
-    signUp.showError = false;
-    signUp.showMessage = false;
+    signup.newUserIsSaved = false;
 
-    signUp.submit = function(form) {
-      signUp.showError = false;
-      signUp.showMessage = false;
+    signup.menuItems = menuItems.menu_items;
 
-      if(form.$invalid) {
-        console.log('The form is not valid');
-        return;
-      }
+    signup.findItem = function (shortName) {
+      let matchedItem = signup.menuItems.find((item) => item.short_name === shortName);
 
-      MenuService.getMenuItem(signUp.shortName)
-                 .then(function(response) {
-                    signUp.user.shortName = response.data;
-                    MenuService.setUser(signUp.user);
-                    signUp.showMessage = true;
-                  }, function(error) {
-                    signUp.showError = true;
-                  });
+      return matchedItem ? true : false;
+    }
 
-      }
-    };
-
+    signup.submit = function (user) {
+      signup.newUserIsSaved = false;
+      signup.newUserIsSaved = SignupService.register(user);
+      console.log(user);
+    }
+  }
 })();
